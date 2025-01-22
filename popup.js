@@ -72,8 +72,8 @@ connection.onMessage.addListener((msg) => {
         const eventName = event.eventName;
         const pathname = url.pathname;
         const trackedTime = event.trackedTime;
-        const eventType = event.type;
         const isExposure = eventName === "$exposure";
+        const eventType = isExposure ? "exposure" : event.type;
 
         let extra = "";
         if (isExposure) {
@@ -94,9 +94,9 @@ connection.onMessage.addListener((msg) => {
           extra += `<div class="eventHeader_extra"><span class="newUserId"><span class="newValue">userId</span>: ${userId}</span></div>`;
         }
 
-        eventString += `<div class="eventTracked eventType_${eventType}">
+        eventString += `<div class="eventTracked eventType_${eventType}" data-event-type="${eventType}">
 					<div class="eventInfo">
-					  <div class="eventHeader" id="eventInfo_${i}">
+					  <div class="eventHeader" id="eventInfo_${i}"  >
 								<div class="eventHeader_title"><span class="eventName">${eventName}</span> - ${pathname} - ${trackedTime}</div>
                 ${extra}
 						</div>
@@ -132,17 +132,40 @@ connection.onMessage.addListener((msg) => {
 });
 
 function filterEvents(keyPressedEvent) {
-  const filter = new RegExp(keyPressedEvent.target.value, "gi");
+  let filterValue = document.getElementById("filterInput").value;
+  if (keyPressedEvent?.target?.value) {
+    filterValue = keyPressedEvent.target.value;
+  }
+
+  const filter = new RegExp(filterValue, "gi");
   const eventElements = document
     .getElementById("trackMessages")
     .getElementsByClassName("eventTracked");
+
+  const typeFilters = {
+    track: !!document.getElementById("track").checked,
+    identify: !!document.getElementById("identify").checked,
+    pageLoad: !!document.getElementById("pageLoad").checked,
+    exposure: !!document.getElementById("exposure").checked,
+  };
+
   for (eventElement of eventElements) {
-    let eventName =
+    const eventType = eventElement.dataset.eventType;
+
+    const eventName =
       eventElement.getElementsByClassName("eventName")[0].textContent;
-    let flagKey =
+    const flagKey =
       eventElement.getElementsByClassName("flagKey")[0]?.textContent;
 
-    if (eventName.match(filter) || (!!flagKey && flagKey.match(filter))) {
+    const isInTypeFilter =
+      typeFilters[eventType] === undefined || typeFilters[eventType];
+
+    const isInSearchFilter =
+      filterValue === "" ||
+      eventName.match(filter) ||
+      (!!flagKey && flagKey.match(filter));
+
+    if (isInSearchFilter && isInTypeFilter) {
       eventElement.classList.remove("hidden");
     } else {
       eventElement.classList.add("hidden");
@@ -193,6 +216,18 @@ document.addEventListener("DOMContentLoaded", function () {
   const filterInput = document.getElementById("filterInput");
   filterInput.onkeyup = filterEvents;
   filterInput.focus();
+
+  const trackFilter = document.getElementById("track");
+  trackFilter.onchange = () => filterEvents();
+
+  const identifyFilter = document.getElementById("identify");
+  identifyFilter.onchange = () => filterEvents();
+
+  const pageFilter = document.getElementById("pageLoad");
+  pageFilter.onchange = () => filterEvents();
+
+  const exposureFilter = document.getElementById("exposure");
+  exposureFilter.onchange = () => filterEvents();
 
   const configureButton = document.getElementById("configureButton");
   configureButton.onclick = toggleConfiguration;
