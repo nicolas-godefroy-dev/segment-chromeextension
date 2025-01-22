@@ -28,7 +28,7 @@ function printVariable(jsonObject, level) {
 
 function queryForUpdate() {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    var currentTab = tabs[0];
+    const currentTab = tabs[0];
 
     connection.postMessage({
       type: "update",
@@ -39,7 +39,7 @@ function queryForUpdate() {
 
 function clearTabLog() {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    var currentTab = tabs[0];
+    const currentTab = tabs[0];
 
     connection.postMessage({
       type: "clear",
@@ -58,16 +58,16 @@ chrome.runtime.onMessage.addListener((message, _sender, _sendResponse) => {
 
 connection.onMessage.addListener((msg) => {
   if (msg.type == "update") {
-    var prettyEventsString = "";
+    let prettyEventsString = "";
     let anonymousId = "";
     let userId = "";
 
     if (msg.events.length > 0) {
       for (var i = 0; i < msg.events.length; i++) {
-        var event = msg.events[i];
+        const event = msg.events[i];
 
-        var jsonObject = JSON.parse(event.raw);
-        var eventString = "";
+        const jsonObject = JSON.parse(event.raw);
+        let eventString = "";
         const url = new URL(event.hostName);
         const eventName = event.eventName;
         const pathname = url.pathname;
@@ -132,8 +132,8 @@ connection.onMessage.addListener((msg) => {
 });
 
 function filterEvents(keyPressedEvent) {
-  var filter = new RegExp(keyPressedEvent.target.value, "gi");
-  var eventElements = document
+  const filter = new RegExp(keyPressedEvent.target.value, "gi");
+  const eventElements = document
     .getElementById("trackMessages")
     .getElementsByClassName("eventTracked");
   for (eventElement of eventElements) {
@@ -151,11 +151,23 @@ function filterEvents(keyPressedEvent) {
 }
 
 function toggleConfiguration() {
-  var configurationDiv = document.getElementById("configurationDiv");
-  configurationDiv.hidden = !configurationDiv.hidden;
+  const configurationDiv = document.getElementById("configurationTab");
+  const eventsDiv = document.getElementById("eventsTab");
+  const headerActionsDiv = document.getElementById("headerActions");
 
-  var contentDiv = document.getElementById("contentDiv");
-  contentDiv.hidden = !contentDiv.hidden;
+  configurationDiv.hidden = false;
+  eventsDiv.hidden = true;
+  headerActionsDiv.className = "active_configureButton";
+}
+
+function toggleEvents() {
+  const configurationDiv = document.getElementById("configurationTab");
+  const eventsDiv = document.getElementById("eventsTab");
+  const headerActionsDiv = document.getElementById("headerActions");
+
+  configurationDiv.hidden = true;
+  eventsDiv.hidden = false;
+  headerActionsDiv.className = "active_eventsButton";
 }
 
 function updateApiDomain(apiDomain) {
@@ -166,7 +178,7 @@ function updateApiDomain(apiDomain) {
 }
 
 function handleApiDomainUpdates() {
-  var apiDomainInput = document.getElementById("apiDomain");
+  const apiDomainInput = document.getElementById("apiDomain");
 
   chrome.storage.local.get(["segment_api_domain"], function (result) {
     apiDomainInput.value = result.segment_api_domain || apiDomainDefault;
@@ -175,15 +187,18 @@ function handleApiDomainUpdates() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  var clearButton = document.getElementById("clearButton");
+  const clearButton = document.getElementById("clearButton");
   clearButton.onclick = clearTabLog;
 
-  var filterInput = document.getElementById("filterInput");
+  const filterInput = document.getElementById("filterInput");
   filterInput.onkeyup = filterEvents;
   filterInput.focus();
 
-  var configureButton = document.getElementById("configureButton");
+  const configureButton = document.getElementById("configureButton");
   configureButton.onclick = toggleConfiguration;
+
+  const eventsButton = document.getElementById("eventsButton");
+  eventsButton.onclick = toggleEvents;
 
   handleApiDomainUpdates();
 });

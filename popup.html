@@ -8,10 +8,13 @@
 		<!-- Header -->
 		<div id="header">
 			<h1>Segment</h1>
-			<input type="button" id="configureButton" value="Configure">
+			<div id="headerActions" class="active_eventsButton">
+				<input type="button" id="eventsButton" value="Events">
+ 				<input type="button" id="configureButton" value="Configure">
+			</div>
 		</div>
  		<!-- Events tab -->
-		<div id="eventsTab">
+		<div id="eventsTab" class="tab">
 			<div id="eventsTab_filters">
 				<input type="text" id="filterInput" placeholder="Event name, flag key...">
 				<input type="button" id="clearButton" value="Clear">
@@ -23,7 +26,8 @@
 			</div>
 		</div>
 		<!-- Configure tab -->
-		<div id="configurationDiv" class="configurationDiv" hidden="hidden">
+		<div id="configurationTab" class="tab" hidden="hidden">
+			<br />
 			API domains - comma separated list of domains used for Segment and Dreamdata events publishing
 			<textarea id="apiDomain" value="api.segment.io,cdn.dreamdata.cloud,track.attributionapp.com,seg-api.usebounce.com,seg-api.bounce.com" placeholder="api.segment.io,cdn.dreamdata.cloud,track.attributionapp.com,seg-api.usebounce.com,seg-api.bounce.com" rows="3">
 		</div>

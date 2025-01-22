@@ -32,15 +32,31 @@ div::-webkit-scrollbar {
   border-bottom: 1px solid #d0d0d9;
 }
 
-#configureButton {
+#headerActions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#configureButton,
+#eventsButton {
   background-color: #fff;
   border: none;
   color: #1d1d1b;
   font-weight: 600;
 }
 
+.active_eventsButton #eventsButton {
+  color: #454ced;
+}
+
+.active_configureButton #configureButton {
+  color: #454ced;
+}
+
 /* Config tabs */
-.configurationDiv {
+.tab {
   width: 100%;
 }
 
