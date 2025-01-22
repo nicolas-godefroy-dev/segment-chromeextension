@@ -2,8 +2,8 @@
   "name": "segment-chromeextension",
   "version": "3.2.0",
   "main": "index.js",
-  "repository": "https://github.com/MartinMouritzen/segment-chromeextension.git",
-  "author": "Martin Mouritzen <martin@martinmouritzen.dk>",
+  "repository": "https://github.com/nicolas-godefroy-dev/segment-chromeextension",
+  "author": "Nicolas Godefroy",
   "license": "MIT",
   "dependencies": {
     "archiver": "^7.0.1"
