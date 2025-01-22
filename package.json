@@ -1,10 +1,13 @@
 {
   "name": "segment-chromeextension",
-  "version": "3.2.0",
+  "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/nicolas-godefroy-dev/segment-chromeextension",
   "author": "Nicolas Godefroy",
   "license": "MIT",
+  "scripts": {
+    "zip": "node zip-for-chromestore.js"
+  },
   "dependencies": {
     "archiver": "^7.0.1"
   }

@@ -1,5 +1,5 @@
 let apiDomainDefault =
-  "api.segment.io,cdn.dreamdata.cloud,track.attributionapp.com,seg-api.usebounce.com,seg-api.bounce.com";
+  "api.segment.io,cdn.dreamdata.cloud,track.attributionapp.com";
 
 let connection = chrome.runtime.connect();
 
