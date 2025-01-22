@@ -63,7 +63,8 @@ connection.onMessage.addListener((msg) => {
     let userId = "";
 
     if (msg.events.length > 0) {
-      for (var i = 0; i < msg.events.length; i++) {
+      for (var i = msg.events.length - 1; i >= 0; i--) {
+        const id = msg.events.length - (i + 1);
         const event = msg.events[i];
 
         const jsonObject = JSON.parse(event.raw);
@@ -96,17 +97,17 @@ connection.onMessage.addListener((msg) => {
 
         eventString += `<div class="eventTracked eventType_${eventType}" data-event-type="${eventType}">
 					<div class="eventInfo">
-					  <div class="eventHeader" id="eventInfo_${i}"  >
+					  <div class="eventHeader" id="eventInfo_${id}"  >
 								<div class="eventHeader_title"><span class="eventName">${eventName}</span> - ${pathname} - ${trackedTime}</div>
                 ${extra}
 						</div>
-						<div class="eventContent" id="eventContent_${i}">
+						<div class="eventContent" id="eventContent_${id}">
 							${printVariable(jsonObject, 0)}
 						</div>
 					</div>
 				</div>`;
 
-        prettyEventsString += eventString;
+        prettyEventsString = eventString + prettyEventsString;
       }
     } else {
       prettyEventsString += `<div class="empty">No events tracked in this tab yet.</div>`;
