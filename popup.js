@@ -88,11 +88,17 @@ connection.onMessage.addListener((msg) => {
         const isNewAnonymousId = jsonObject.anonymousId !== anonymousId;
         const isNewUserId = jsonObject.userId !== userId;
         if (isNewAnonymousId || isNewUserId) {
+          // Anonymous id
           anonymousId = jsonObject.anonymousId;
-          userId = jsonObject.userId;
+          extra += `<div class="eventHeader_extra"><span class="newAnonymousId">${
+            isNewAnonymousId ? '<span class="newValue">New</span> ' : ""
+          }anonymousId: ${anonymousId}</span></div>`;
 
-          extra += `<div class="eventHeader_extra"><span class="newAnonymousId"><span class="newValue">anonymousId</span>: ${anonymousId}</span></div>`;
-          extra += `<div class="eventHeader_extra"><span class="newUserId"><span class="newValue">userId</span>: ${userId}</span></div>`;
+          // User id
+          userId = jsonObject.userId;
+          extra += `<div class="eventHeader_extra"><span class="newUserId">${
+            isNewUserId ? '<span class="newValue">New</span> ' : ""
+          }userId: ${userId}</span></div>`;
         }
 
         eventString += `<div class="eventTracked eventType_${eventType}" data-event-type="${eventType}">
