@@ -109,7 +109,7 @@ connection.onMessage.addListener((msg) => {
         prettyEventsString += eventString;
       }
     } else {
-      prettyEventsString += "No events tracked in this tab yet.";
+      prettyEventsString += `<div class="empty">No events tracked in this tab yet.</div>`;
     }
     document.getElementById("trackMessages").innerHTML = prettyEventsString;
 

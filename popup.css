@@ -216,3 +216,7 @@ input[type="button"]:hover {
   color: black;
   font-weight: 500;
 }
+
+.empty {
+  padding: 12px;
+}
