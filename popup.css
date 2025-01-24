@@ -16,7 +16,11 @@ div::-webkit-scrollbar {
 }
 
 #trackMessages {
-  max-height: 460px;
+  min-height: 500px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   overflow: auto;
   font-size: 14px;
 }

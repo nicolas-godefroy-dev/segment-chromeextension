@@ -1,13 +1,14 @@
 {
   "name": "Segment Event Tracker",
   "manifest_version": 3,
-  "version": "3.3",
+  "version": "3.4",
   "description": "See when Segment events are being tracked.",
-  "permissions": ["storage", "webRequest"],
+  "permissions": ["storage", "webRequest", "devtools"],
   "action": {
     "default_icon": "logo.png",
     "default_popup": "popup.html"
   },
+  "devtools_page": "devtools.html",
   "icons": {
     "16": "logo16.png",
     "48": "logo48.png",
