@@ -1,7 +1,7 @@
 {
   "name": "Segment Event Tracker",
   "manifest_version": 3,
-  "version": "3.4",
+  "version": "3.5",
   "description": "See when Segment events are being tracked.",
   "permissions": ["storage", "webRequest", "devtools"],
   "action": {
